@@ -1,0 +1,6 @@
+<h1>Welcome to Team Task Manager</h1>
+  <h3>Users:</h3>
+    <% @users.each do |user| %>
+      <h5><%= user.name %></h5>
+    <% end %>
+<%= button_to 'Sign Up', signup_path, method: 'get' %>
