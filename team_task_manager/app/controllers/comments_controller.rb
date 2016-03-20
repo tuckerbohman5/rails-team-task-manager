@@ -3,10 +3,12 @@ class CommentsController < ApplicationController
   end
 
   def create
+
     @comment = Comment.new(comment_params)
     @comment.save
     @user = current_user
-    @project = Project.find_by(comment_params[:project_id])
+    @project = Project.find_by(id: comment_params[:project_id])
+    
     @project.comments << @comment
     @project.save
     @user.comments << @comment
