@@ -7,5 +7,8 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   post 'logout', to: 'sessions#destroy'
 
-  resources :projects
+  resources :projects do 
+    resources :tasks
+  end
+
 end
