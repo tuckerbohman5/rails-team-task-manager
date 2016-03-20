@@ -1,7 +1,22 @@
 <h1><%= @project.name %></h1>
 <h3><%= @project.description %></h3>
 <h3>Due Date: <%= @project.due_date %></h3>
-<h4>Project Owner: <%= @project.user.name %></h4>
+<h4>Project Owner: <%= @project.user.name %></h4><br>
+
+<% if !@project.comments.nil? %>
+<h5>Comments:</h5>
+  <% @project.comments.each do |comment| %>
+  <p><%= comment.user.name %> Said: <%= comment.content %></p>
+  <% end %>
+<% end %>
+
+<%= form_for @comment do |f| %>
+<%= f.text_field :content, :placeholder => "New comment" %>
+<%= f.hidden_field :project_id, value: @project.id %>
+<%= f.hidden_field :user_id, value: current_user.id %>
+<%= f.submit "Add comment" %>
+<% end %>
+
 
 <h5>Tasks:</h5>
 <ul>

@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
 
   def show
     find_project
+    @comment = Comment.new
   end
 
   def new
