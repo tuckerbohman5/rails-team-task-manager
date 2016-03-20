@@ -1,0 +1,12 @@
+<%= form_for(project) do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %><br>
+
+<%= f.label :description %>
+<%= f.text_area :description %><br>
+
+<%= f.label "Due Date"%>
+<%= f.date_select :due_date %><br>
+
+<%= f.submit "Create Project" %>
+<% end %>
