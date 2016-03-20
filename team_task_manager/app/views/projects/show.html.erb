@@ -2,3 +2,6 @@
 <h3><%= @project.description %></h3>
 <h3>Due Date: <%= @project.due_date %></h3>
 <h4>Project Owner: <%= @project.user.name %></h4>
+
+<%= button_to "Edit Project", edit_project_path(@project), method: 'get' %>
+<%= button_to "Delete Project", "/projects/#{@project.id}", method: 'delete' %>
