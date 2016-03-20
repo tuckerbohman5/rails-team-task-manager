@@ -3,4 +3,12 @@
     <% @users.each do |user| %>
       <h5><%= user.name %></h5>
     <% end %>
+<% if session[:user_id].nil? %>
+   <%=render partial: 'sessions/form', locals: {user: @user}%>
+<% else %>
+    <h5 style='color:red'>Logged in as: <%= @user.name %></h5>
+<% end %>
+<br>
+<br>
 <%= button_to 'Sign Up', signup_path, method: 'get' %>
+<%= button_to 'Log Out', logout_path, method: 'post' %>
