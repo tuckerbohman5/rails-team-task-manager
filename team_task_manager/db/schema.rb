@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20160320053521) do
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
-    t.datetime "due_date"
+    t.date     "due_date"
     t.boolean  "completed"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

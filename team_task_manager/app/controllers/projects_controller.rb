@@ -11,8 +11,11 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    raise params.inspect
-    
+    @project = Project.new(project_params)
+    @project.user = current_user
+    @project.save
+    redirect_to project_path(@project)
+
   end
 
   def edit
@@ -23,4 +26,9 @@ class ProjectsController < ApplicationController
 
   def destroy
   end
+
+  private 
+    def project_params
+      params.require(:project).permit(:name, :description, :due_date)
+    end
 end

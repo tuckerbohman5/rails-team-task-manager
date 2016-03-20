@@ -1,12 +1,14 @@
 <h1>Welcome to Team Task Manager</h1>
-  <h3>Users:</h3>
-    <% @users.each do |user| %>
-      <h5><%= user.name %></h5>
-    <% end %>
+  
 <% if session[:user_id].nil? %>
    <%=render partial: 'sessions/form', locals: {user: @user}%>
 <% else %>
-    <h5 style='color:red'>Logged in as: <%= @user.name %></h5>
+    <h5 style='color:red'>Logged in as: <%= @user.name if @user.name %></h5>
+    <h3>Projects:</h3>
+    <% @projects.each do |project| %>
+      <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5>
+    <% end %>
+    <%= button_to 'New Project', new_project_path, method: 'get' %>
 <% end %>
 <br>
 <br>
