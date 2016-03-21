@@ -9,9 +9,11 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    3.times {@project.tasks.build}
   end
 
   def create
+    
     @project = Project.new(project_params)
     @project.user = current_user
     @project.save
@@ -38,7 +40,7 @@ class ProjectsController < ApplicationController
 
   private 
     def project_params
-      params.require(:project).permit(:name, :description, :due_date)
+      params.require(:project).permit(:name, :description, :due_date, tasks_attributes: [:description])
     end
 
     def find_project

@@ -1,0 +1,14 @@
+<%= form_for @project do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <ul>
+    <%= f.fields_for :tasks do |tasks_form| %>
+      <li>
+        <%= tasks_form.label :description %>
+        <%= tasks_form.text_field :description %>
+ 
+      </li>
+    <% end %>
+  </ul>
+<% end %>

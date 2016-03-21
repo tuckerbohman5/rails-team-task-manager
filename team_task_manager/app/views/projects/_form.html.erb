@@ -1,4 +1,5 @@
-<%= form_for(project) do |f| %>
+
+<%= form_for(@project) do |f| %>
 <%= f.label :name %>
 <%= f.text_field :name %><br>
 
@@ -7,6 +8,19 @@
 
 <%= f.label "Due Date"%>
 <%= f.date_field :due_date %><br>
+  
+  <ul>
+    
+    <%= f.fields_for :tasks do |task_form| %>
+      
+      <li>
+        <%= task_form.label "Task" %>
+        <%= task_form.text_field :description %>
+      </li>
+        
+   
+    <% end %>
+  </ul>
 
 <%= f.submit "Create Project" %>
 <% end %>
