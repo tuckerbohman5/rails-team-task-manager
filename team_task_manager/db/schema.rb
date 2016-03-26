@@ -26,18 +26,18 @@ ActiveRecord::Schema.define(version: 20160326212922) do
     t.text     "description"
     t.integer  "user_id"
     t.date     "due_date"
-    t.boolean  "completed"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "completed",   default: false, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string   "description"
     t.integer  "project_id"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.boolean  "completed"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "completed",   default: false, null: false
   end
 
   create_table "users", force: :cascade do |t|
