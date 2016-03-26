@@ -4,6 +4,8 @@ class Project < ActiveRecord::Base
   has_many :comments
   has_many :users, through: :comments
 
+  validates_presence_of :name, :description
+
   #accepts_nested_attributes_for :tasks
 
   def tasks_attributes=(tasks_attributes)

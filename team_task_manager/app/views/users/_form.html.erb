@@ -1,12 +1,42 @@
+<% if user.errors.any? %>
+  <div id="error_overview">
+    <h2>There were errors:</h2>
+    <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <%= form_for(:user, action: 'signup') do |f| %>
-<%= f.label :name %>
-<%= f.text_field :name%><br>
+  <% if user.errors[:name].empty? %>
+    <div class="field">
+  <% else %>
+    <div class="field_with_errors">
+  <% end %>
+      <%= f.label :name %>
+      <%= f.text_field :name%><br>
+    </div>
 
-<%= f.label :email %>
-<%= f.text_field :email %><br>
+  <% if user.errors[:email].empty? %>
+    <div class="field">
+  <% else %>
+    <div class="field_with_errors">
+  <% end %>
+      <%= f.label :email %>
+      <%= f.text_field :email %><br>
+    </div>
 
-<%= f.label :password %>
-<%= f.password_field :password %>
-<%= f.submit "Sign Up" %>
+  <% if user.errors[:password].empty? %>
+    <div class="field">
+  <% else %>
+    <div class="field_with_errors">
+  <% end %>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+      <%= f.submit "Sign Up" %>
 <%end%>
 
