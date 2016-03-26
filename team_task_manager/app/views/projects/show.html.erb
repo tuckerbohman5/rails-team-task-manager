@@ -22,7 +22,7 @@
 <ul>
 <h4 style="color:red">Incomplete Tasks</h4>
 <% @project.incomplete_tasks.each do |task| %>
-  <li><%= task.description %>-<%=task.user.name%></li>
+  <li><%= task.description %>-<%=task.user.name%><br> <%= link_to "Complete?", task_complete_path(task), method: 'post' %> </li>
 <% end %>
 
 <h4 style="color:green">Complete Tasks</h4>

@@ -13,7 +13,8 @@ Rails.application.routes.draw do
     resources :tasks
   end
 
-  post '/projects/:id/complete', to: 'projects#complete'
+  post '/projects/:id/complete', to: 'projects#complete', as: 'project_complete'
+  post '/tasks/:id/complete', to: 'tasks#complete', as: 'task_complete'
 
   resources :comments
 
