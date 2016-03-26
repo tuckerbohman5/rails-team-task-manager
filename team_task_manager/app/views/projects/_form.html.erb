@@ -16,6 +16,8 @@
       <li>
         <%= task_form.label "Task" %>
         <%= task_form.text_field :description %>
+        <%= task_form.label "User Assigned" %>
+        <%= task_form.collection_select :user_id, @users, :id, :name %>
       </li>
         
    

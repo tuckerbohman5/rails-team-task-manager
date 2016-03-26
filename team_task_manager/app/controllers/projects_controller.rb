@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    @users = User.all
     @project = Project.new
     3.times {@project.tasks.build}
   end
@@ -40,7 +41,7 @@ class ProjectsController < ApplicationController
 
   private 
     def project_params
-      params.require(:project).permit(:name, :description, :due_date, tasks_attributes: [:description])
+      params.require(:project).permit(:name, :description, :due_date, tasks_attributes: [:description, :user_id])
     end
 
     def find_project
