@@ -13,4 +13,12 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def completed_tasks
+    tasks.where(completed: true)
+  end
+
+  def incomplete_tasks
+    tasks.where(completed: false)
+  end
+
 end

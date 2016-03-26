@@ -20,7 +20,13 @@
 
 <h5>Tasks:</h5>
 <ul>
-<% @project.tasks.each do |task| %>
+<h4 style="color:red">Incomplete Tasks</h4>
+<% @project.incomplete_tasks.each do |task| %>
+  <li><%= task.description %>-<%=task.user.name%></li>
+<% end %>
+
+<h4 style="color:green">Complete Tasks</h4>
+<% @project.completed_tasks.each do |task| %>
   <li><%= task.description %>-<%=task.user.name%></li>
 <% end %>
 </ul>
