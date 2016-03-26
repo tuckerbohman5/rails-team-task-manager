@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :tasks
   end
 
+  post '/projects/:id/complete', to: 'projects#complete'
+
   resources :comments
 
 end

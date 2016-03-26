@@ -35,4 +35,6 @@
 <%= button_to "Add Task", new_project_task_path(@project), method: 'get' %>
 
 <%= button_to "Edit Project", edit_project_path(@project), method: 'get' %>
+<%= button_to "Mark as Complete", "/projects/#{@project.id}/complete", method: 'post' if @project.completed == false %>
+
 <%= button_to "Delete Project", "/projects/#{@project.id}", method: 'delete' %>

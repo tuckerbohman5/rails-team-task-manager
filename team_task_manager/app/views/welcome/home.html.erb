@@ -10,14 +10,18 @@
       <%= link_to("Login with Facebook!", "/auth/facebook") %>
       <% else %>
             <h5 style='color:red'>Logged in as: <%= @user.name if @user.name %></h5>
-          <h3>Projects:</h3>
-            <% @projects.each do |project| %>
+          <h3 style="color:red">Incomplete Projects:</h3>
+            <% Project.incomplete_projects.each do |project| %>
                <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5>
-             <% end %>
-                <%= button_to 'New Project', new_project_path, method: 'get' %>
             <% end %>
+                <%= button_to 'New Project', new_project_path, method: 'get' %>
+          <h3 style="color:green">Completed Projects:</h3>
+            <% Project.completed_projects.each do |project| %>
+               <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5>
+            <% end %>
+      <% end %>
       
-      </p>
+      
     </div>
   </div>
 

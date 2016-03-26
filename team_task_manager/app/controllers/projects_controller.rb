@@ -33,6 +33,12 @@ class ProjectsController < ApplicationController
     redirect_to project_path(@project)
   end
 
+  def complete
+    find_project
+    @project.update(completed: true)
+    redirect_to root_path
+  end
+
   def destroy
     find_project
     @project.destroy
