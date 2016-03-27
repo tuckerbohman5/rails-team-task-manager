@@ -12,19 +12,25 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id 
       redirect_to root_path
       else
+      @error = "Invalid Login Please Try Again"
       render :new
       end
    
     else 
-      @user = User.find_or_create_by(email: auth[:info][:email]) 
+      @user = User.find_or_create_by(uid: auth['uid']) do |u|
+        u.name = auth['info']['name']
+        u.email = auth['info']['email']
+      end
+      
       @user.save
-      binding.pry
-      @user.name = auth[:info][:name]
-      @user.email = auth[:info][:email]
       session[:user_id] = @user.id
       redirect_to root_path
 
     end
+  end 
+
+  def auth
+    request.env['omniauth.auth']
   end
 
   def destroy

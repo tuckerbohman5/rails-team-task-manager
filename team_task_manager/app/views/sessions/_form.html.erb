@@ -1,34 +1,19 @@
-<% if user.errors.any? %>
-  <div id="error_overview">
-    <h2>There were errors:</h2>
-    <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+
+
+
+
 
 
 <%= form_for :user, url: '/login', method: 'post' do |f| %>
 
-  <% if user.errors[:email].empty? %>
-    <div class="field">
-  <% else %>
-    <div class="field_with_errors">
-  <% end %>
+ 
       <%= f.label :email %>
       <%= f.text_field :email %><br>
-    </div>
+  
       
-  <% if user.errors[:password].empty? %>
-    <div class="field">
-  <% else %>
-    <div class="field_with_errors">
-  <% end %>
+  
       <%= f.label :password %>
       <%= f.password_field :password %>
-    </div>
-
+    
       <%= f.submit "Log In" %>
 <%end%>

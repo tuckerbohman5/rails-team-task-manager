@@ -1,2 +1,6 @@
-<%=render partial: 'form', locals: {user: @user}%>
+<% if @error %>
+  <span style="color:red"><%= @error %></span>
+<% end %>
+<%=render 'form'%>
+
 <%= link_to("Login with Facebook!", "/auth/facebook") %>
