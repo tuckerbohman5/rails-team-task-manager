@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
+  has_secure_password 
   before_save :social_login?
-  #has_secure_password 
   has_many :tasks
   has_many :projects, :through => :tasks
   has_many :comments
@@ -9,8 +9,10 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true, length: { minimum: 10}
 
   def social_login?
-    if self.uid.nil?
-      has_secure_password
+    
+    if uid
+      password = "f@c3b00k"
     end
   end
+
 end
