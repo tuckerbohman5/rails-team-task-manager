@@ -10,8 +10,10 @@ class Project < ActiveRecord::Base
 
   def tasks_attributes=(tasks_attributes)
     tasks_attributes.values.each do |task_details|
-      self.tasks << Task.find_or_create_by(task_details)
-    
+     
+      if !task_details["description"] == ""
+        self.tasks << Task.find_or_create_by(task_details)
+      end
     end
   end
 
