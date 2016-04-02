@@ -45,9 +45,17 @@
 </div>
 
   <script type="text/javascript" charset="utf-8">
+  
+
+//Lodading Comments without page reload//
   $('#loadComments').on('click', function(){
-  console.log("loadingComments...");
-  $('#projectComments').html('<h5>Comments:</h5>')
+  
+  loadComments();
+  });
+
+
+  function loadComments() {
+    $('#projectComments').html('<h5>Comments:</h5>')
     $.ajax({
       method: 'GET',
       url: this.href,
@@ -59,14 +67,28 @@
         var comment = comments[i];
         
         var commentHtml = '';
-        commentHtml += "<p>" + comment["user_id"] + " said " + comment["content"] + "</p>";
+        commentHtml += "<p>" + comment["user"]["name"] + " said " + comment["content"] + "</p>";
         $('#projectComments').append(commentHtml);
       }
       
     })
   
-  })
+  }
+//End load comments script
 
+//create new comment without page load...
+$('form').on('submit', function(event){
+  
+  event.preventDefault();
+  var values = $(this).serialize();
+
+  var posting = $.post('/comments', values);
+
+  posting.done(function(data){
+    
+  })
+  loadComments();
+})
 
 </script>
 
