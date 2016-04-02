@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
     @project.save
     @user.comments << @comment
     @user.save
-    render json: @comment, status: 201
+    #render json: @comment, status: 201
     #redirect_to project_path(@project)
   end
 

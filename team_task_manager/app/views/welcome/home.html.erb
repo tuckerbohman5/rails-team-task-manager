@@ -12,7 +12,8 @@
             <h5 style='color:red'>Logged in as: <%= @user.name if @user.name %></h5>
           <h3 style="color:red">Incomplete Projects:</h3>
             <% Project.incomplete_projects.each do |project| %>
-               <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5>
+               <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5><a class="moreInfo" data-id="<%=project.id%>">More info...</a>
+               <p data-id="<%=project.id%>"></p>
             <% end %>
                 <%= button_to 'New Project', new_project_path, method: 'get' %>
           <h3 style="color:green">Completed Projects:</h3>
@@ -25,7 +26,22 @@
     </div>
   </div>
 
+<script type="text/javascript" charset="utf-8">
+  $('.moreInfo').on('click', function() {
+    // event.preventDefualt();
+    
+    $.ajax({
+      method: 'GET',
+      url: '/projects/' + this.attributes[1].value,
+      dataType: 'JSON'
+    }).done(function(response) {
+      var id = response["project"]["id"];
+      var description = response["project"]["description"];
+      $('p[data-id="'+ id +'"]').text(description);
 
+    })
+      })
+</script>
 
 
 

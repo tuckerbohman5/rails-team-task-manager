@@ -77,18 +77,18 @@
 //End load comments script
 
 //create new comment without page load...
-$('form').on('submit', function(event){
+// $('form#addComment').on('submit', function(event){
   
-  event.preventDefault();
-  var values = $(this).serialize();
+//   event.preventDefault();
+//   var values = $(this).serialize();
+//   debugger;
+//   var posting = $.post('/comments', values);
 
-  var posting = $.post('/comments', values);
-
-  posting.done(function(data){
-    
-  })
-  loadComments();
-})
+//   // posting.done(function(data){
+//   //   debugger;
+//   // })
+//   loadComments();
+// })
 
 </script>
 

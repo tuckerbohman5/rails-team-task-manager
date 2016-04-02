@@ -14,7 +14,7 @@
 <%= f.text_field :content, :placeholder => "New comment" %>
 <%= f.hidden_field :project_id, value: @project.id %>
 <%= f.hidden_field :user_id, value: current_user.id %>
-<%= f.submit "Add comment" %>
+<%= f.submit "Add comment", id: "addComment" %>
 <% end %>
 
 
@@ -39,3 +39,18 @@
 
 <%= button_to "Delete Project", "/projects/#{@project.id}", method: 'delete' %>
 
+<script type="text/javascript" charset="utf-8">
+  $('form').on('submit', function(event){
+  
+  event.preventDefault();
+  var values = $(this).serialize();
+ 
+  var posting = $.post('/comments', values);
+
+  // posting.done(function(data){
+  //   debugger;
+  // })
+  loadComments();
+})
+
+</script>
