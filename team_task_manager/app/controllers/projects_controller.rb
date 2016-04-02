@@ -5,6 +5,10 @@ class ProjectsController < ApplicationController
   def show
     find_project
     @comment = Comment.new
+    respond_to do |f|
+      f.html { render :show }
+      f.json { render json: @project }
+    end
   end
 
   def new
