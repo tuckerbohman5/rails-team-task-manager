@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   post '/tasks/:id/complete', to: 'tasks#complete', as: 'task_complete'
 
   resources :comments
-
+  get '/users', to: 'users#index'
 end

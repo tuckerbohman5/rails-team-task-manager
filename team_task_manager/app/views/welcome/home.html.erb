@@ -16,6 +16,8 @@
                <p data-id="<%=project.id%>"></p>
             <% end %>
                 <%= button_to 'New Project', new_project_path, method: 'get' %>
+                <button id="viewUsers">View Users</button>
+                <div id="users"></div>
           <h3 style="color:green">Completed Projects:</h3>
             <% Project.completed_projects.each do |project| %>
                <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5>
@@ -27,6 +29,8 @@
   </div>
 
 <script type="text/javascript" charset="utf-8">
+  //Loads more info for a project...
+
   $('.moreInfo').on('click', function() {
     // event.preventDefualt();
     
@@ -41,6 +45,33 @@
 
     })
       })
+//end more info
+
+  $('#viewUsers').on('click', function() {
+    $.ajax({
+      method: 'GET',
+      url: '/users',
+      dataType: 'JSON'
+    }).done(function(response) {
+      var usersDiv = $('#users');
+      var users = response["users"];
+      
+      
+      for (var i = 0; i < users.length; i++){
+        
+        var user = {
+          name: users[i]["name"],
+          taskCount: users[i]["tasks"].length
+        }
+          
+        usersDiv.append('<p>' + user.name + ' has ' + user.taskCount + ' tasks!</p>');
+      }
+        
+      })
+
+    })
+  
+
 </script>
 
 
