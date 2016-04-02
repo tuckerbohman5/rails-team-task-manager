@@ -4,10 +4,13 @@
 
 
 <% if !@project.comments.nil? %>
-<h5>Comments:</h5>
+<div id="projectComments">
+<button id='loadComments'>View Comments</button>
+<!-- <h5 id='comments'>Comments:</h5>
   <% @project.comments.each do |comment| %>
   <p><%= comment.user.name %> Said: <%= comment.content %></p>
-  <% end %>
+  <% end %> -->
+</div>
 <% end %>
 
 <%= form_for @comment do |f| %>
@@ -38,3 +41,4 @@
 <%= button_to "Mark as Complete", "/projects/#{@project.id}/complete", method: 'post' if @project.completed == false %>
 
 <%= button_to "Delete Project", "/projects/#{@project.id}", method: 'delete' %>
+

@@ -15,3 +15,9 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+
+
+// $('#loadComments').on('submit', function(){
+//   console.log("loadingComments...");
+// })
