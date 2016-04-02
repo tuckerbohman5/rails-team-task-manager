@@ -17,21 +17,29 @@ class SessionsController < ApplicationController
       end
    
     else 
-      @user = User.find_or_create_by(uid: auth['uid']) do |u|
+      # yours users
+
+      #   id           uid
+      #   1            4515
+
+
+      # facebook users tabe
+      #   id
+      #   4515
+
+      @user = User.find_or_create_by(facebook_uid: auth['uid']) do |u|
         u.name = auth['info']['name']
         u.email = auth['info']['email']
+        u.password = SecureRandom.hex
       end
       
-      @user.save
       session[:user_id] = @user.id
       redirect_to root_path
 
     end
   end 
 
-  def auth
-    request.env['omniauth.auth']
-  end
+
 
   def destroy
     session.destroy
