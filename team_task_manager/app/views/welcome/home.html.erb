@@ -12,11 +12,12 @@
             <h5 style='color:red'>Logged in as: <%= @user.name if @user.name %></h5>
           <h3 style="color:red">Incomplete Projects:</h3>
             <% Project.incomplete_projects.each do |project| %>
-               <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5><a class="moreInfo" data-id="<%=project.id%>">More info...</a>
+               <h5><%=link_to project.name, project_path(project) %> - Due: <%= project.due_date %></h5><a class="moreInfo" data-id="<%=project.id%>">More info...</a><a  class="hideInfo" data-id="<%=project.id%>">Hide info...</a>
                <p data-id="<%=project.id%>"></p>
             <% end %>
                 <%= button_to 'New Project', new_project_path, method: 'get' %>
                 <button id="viewUsers">View Users</button>
+                <button style="display:none" id="hideUsers">Hide Users</button>
                 <div id="users"></div>
           <h3 style="color:green">Completed Projects:</h3>
             <% Project.completed_projects.each do |project| %>
@@ -31,6 +32,13 @@
 <script type="text/javascript" charset="utf-8">
   //Loads more info for a project...
 
+  $(document).ready(
+   function()
+   {
+     $('.hideInfo').hide();
+   }
+);
+
   $('.moreInfo').on('click', function() {
     // event.preventDefualt();
     
@@ -42,12 +50,22 @@
       var id = response["project"]["id"];
       var description = response["project"]["description"];
       $('p[data-id="'+ id +'"]').text(description);
-
+      $('a.moreInfo[data-id="'+ id +'"]').hide();
+      $('a.hideInfo[data-id="'+ id +'"]').show();
     })
       })
+
+  $('.hideInfo').on('click', function(){
+    var id = this.attributes[1].value;
+    $(this).hide();
+    $('p[data-id="'+ id +'"]').text('');
+    $('a.moreInfo[data-id="'+ id +'"]').show();
+  })
 //end more info
 
   $('#viewUsers').on('click', function() {
+    $('#viewUsers').hide();
+    $('#hideUsers').show();
     $.ajax({
       method: 'GET',
       url: '/users',
@@ -70,7 +88,12 @@
       })
 
     })
-  
+  $('#hideUsers').on('click', function(){
+    $('#users').html('');
+    $('#viewUsers').show();
+    $('#hideUsers').hide();
+
+  })
 
 </script>
 
