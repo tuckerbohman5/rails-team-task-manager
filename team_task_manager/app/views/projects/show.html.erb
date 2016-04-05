@@ -3,9 +3,11 @@
 <h3>Due Date: <%= @project.due_date %></h3>
 
 
-<% if !@project.comments.nil? %>
-<div id="projectComments">
+<% if !@project.comments.empty? %>
 <button id='loadComments'>View Comments</button>
+<button id='hideComments'>Hide Comments</button>
+<div id="projectComments">
+
 
 </div>
 <% end %>
@@ -32,14 +34,23 @@
 </ul>
 
 
-<%= button_to "Add Task", new_project_task_path(@project), method: 'get' %>
+<%= link_to "Add Task", new_project_task_path(@project), method: 'get' %><br>
 
-<%= button_to "Edit Project", edit_project_path(@project), method: 'get' %>
-<%= button_to "Mark as Complete", "/projects/#{@project.id}/complete", method: 'post' if @project.completed == false %>
+<%= link_to "Edit Project", edit_project_path(@project), method: 'get' %><br>
+<%= link_to "Mark as Complete", "/projects/#{@project.id}/complete", method: 'post' if @project.completed == false %><br>
 
-<%= button_to "Delete Project", "/projects/#{@project.id}", method: 'delete' %>
+<%= link_to "Delete Project", "/projects/#{@project.id}", method: 'delete' %><br>
 
 <script type="text/javascript" charset="utf-8">
+
+  $(document).ready(
+   function()
+   {
+     $('#hideComments').hide();
+   }
+);
+
+
   $('form').on('submit', function(event){
   
   event.preventDefault();
@@ -51,6 +62,14 @@
   //   debugger;
   // })
   loadComments();
+  $('#loadComments').hide();
+  $('#hideComments').show();
 })
+
+  $('#hideComments').on('click', function(){
+    $('#projectComments').html('');
+    $('#loadComments').show();
+    $(this).hide();
+  })
 
 </script>

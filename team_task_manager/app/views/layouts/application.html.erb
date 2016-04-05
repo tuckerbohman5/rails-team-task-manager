@@ -70,7 +70,8 @@
         commentHtml += "<p>" + comment["user"]["name"] + " said " + comment["content"] + "</p>";
         $('#projectComments').append(commentHtml);
       }
-      
+      $('#loadComments').hide();
+      $('#hideComments').show();
     })
   
   }
