@@ -95,7 +95,7 @@ $(document).ready(function() {
   function hideComments() {
     $('#projectComments').html('');
     $('#loadComments').show();
-    $(this).hide();
+    $('#hideComments').hide();
   }
   
   function getMoreInfo(link) {
