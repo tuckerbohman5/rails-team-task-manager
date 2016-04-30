@@ -26,7 +26,7 @@ $(document).ready(function() {
     $('#loadComments').on('click', function(){
       loadComments();
     });
-    $('form').on('submit', function(event){
+    $('#new_comment').on('submit', function(event){
       createComment(event, this);
     });
     $('#hideComments').on('click', function(){
