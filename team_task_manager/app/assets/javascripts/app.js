@@ -8,7 +8,7 @@ $(document).ready(
     $('.moreInfo').on('click', getMoreInfo(); 
     $('.hideInfo').on('click', hideMoreInfo());
     $('#viewUsers').on('click', viewUsers());
-    $('#hideUsers').on('click', hideUsers())
+    $('#hideUsers').on('click', hideUsers());
   }
 );
 

@@ -14,22 +14,12 @@ class CommentsController < ApplicationController
     @project = Project.find_by(id: params[:comment][:project_id])
     @comment = @project.comments.build(comment_params)
     @comment.user = current_user
-
-    # @comment = Comment.new(comment_params)
-    # @user = current_user
-    # @project = 
-    
-    # @project.comments << @comment
-    # @project.save
-    # @user.comments << @comment
-    # @user.save
-    binding.pry
     
     if @comment.save
-    
-      render json: @comment, status: 201
+      binding.pry    
+      render json: @comment
     else
-      render # some sort of error json
+      render :nothing
     end
 
     #redirect_to project_path(@project)
