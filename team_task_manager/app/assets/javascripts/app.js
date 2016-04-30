@@ -1,30 +1,27 @@
 $(document).ready(
   function(){
+    $('.hideInfo').hide();
     $('#hideComments').hide();
-    $('#loadComments').on('click', loadComments())
+    $('#loadComments').on('click', loadComments());
+    $('form').on('submit', createComment(event));
+    $('#hideComments').on('click', hideComments();
+    $('.moreInfo').on('click', getMoreInfo(); 
+    $('.hideInfo').on('click', hideMoreInfo());
+    $('#viewUsers').on('click', viewUsers());
+    $('#hideUsers').on('click', hideUsers())
   }
 );
 
-  //Lodading Comments without page reload//
-  // $('#loadComments').on('click', function(){
-  
-  //   loadComments();
-  // });
-
-
   function loadComments() {
     $('#projectComments').html('<h5>Comments:</h5>')
-
     $.ajax({
       method: 'GET',
       url: this.href,
       dataType: 'JSON'
     }).done(extractComments(projectData) {
-      
       $('#loadComments').hide();
       $('#hideComments').show();
-    })
-  
+    }) 
   }
 
   function extractComments(projectData) {
@@ -33,9 +30,7 @@ $(document).ready(
       for (var i = 0; i < comments.length; i++) {
         var commentData = comments[i];
         var commentHtml = '';
-
         commentHtml = buildCommentParagraph(commentData);
-        
         $('#projectComments').append(commentHtml);
       }
   }
@@ -44,88 +39,78 @@ $(document).ready(
     return "<p>" + commentData["user"]["name"] + " said " + commentData["content"] + "</p>";
   }
 
+  function createComment(event) {
+    event.preventDefault();
+    var commentData = $(this).serialize();
+    var posting = $.post('/comments', commentData);
+      posting.done(appendComment(data));
+  }
 
-  $('form').on('submit', function(event){
-  
-  event.preventDefault();
-  var values = $(this).serialize();
- 
-  var posting = $.post('/comments', values);
+  function appendComment(data) {
+    debugger;
+  }
 
-  posting.done(function(data){
-    $('#projectComments').append(data);
-  })
-  
-  
-})
-
-  $('#hideComments').on('click', function(){
+  function hideComments() {
     $('#projectComments').html('');
     $('#loadComments').show();
     $(this).hide();
-  })
-
-
-
-  $(document).ready(
-   function()
-   {
-     $('.hideInfo').hide();
-   }
-);
-
-  $('.moreInfo').on('click', function() {
-    // event.preventDefualt();
-    
+  }
+  
+  function getMoreInfo() {
     $.ajax({
       method: 'GET',
       url: '/projects/' + this.attributes[1].value,
       dataType: 'JSON'
-    }).done(function(response) {
-      var id = response["project"]["id"];
-      var description = response["project"]["description"];
-      $('p[data-id="'+ id +'"]').text(description);
-      $('a.moreInfo[data-id="'+ id +'"]').hide();
-      $('a.hideInfo[data-id="'+ id +'"]').show();
-    })
-      })
+    }).done(extractInfo(projectData));
+  }
 
-  $('.hideInfo').on('click', function(){
+  function extractInfo(projectData){
+    var id = projectData["project"]["id"];
+    var description = projectData["project"]["description"];
+    $('p[data-id="'+ id +'"]').text(description);
+    $('a.moreInfo[data-id="'+ id +'"]').hide();
+    $('a.hideInfo[data-id="'+ id +'"]').show();
+  }
+
+  function hideMoreInfo() {
     var id = this.attributes[1].value;
     $(this).hide();
     $('p[data-id="'+ id +'"]').text('');
-    $('a.moreInfo[data-id="'+ id +'"]').show();
-  })
-//end more info
+    $('a.moreInfo[data-id="'+ id +'"]').show();  
+  } 
 
-  $('#viewUsers').on('click', function() {
+  function viewUsers() {
     $('#viewUsers').hide();
     $('#hideUsers').show();
-    $.ajax({
+    $.ajax({ 
       method: 'GET',
       url: '/users',
       dataType: 'JSON'
-    }).done(function(response) {
-      var usersDiv = $('#users');
-      var users = response["users"];
-      
-      
-      for (var i = 0; i < users.length; i++){
-        
-        var user = {
-          name: users[i]["name"],
-          taskCount: users[i]["tasks"].length
-        }
-          
-        usersDiv.append('<p>' + user.name + ' has ' + user.taskCount + ' tasks!</p>');
+    }).done(extractUsers(usersData));
+  }
+  
+  function extractUsers(usersData) {
+    var users = usersData["users"];
+    for(var i = 0; i < users.length; i++){
+      var user = {
+        name: users[i]["name"],
+        taskCount: users[i]["tasks"].length
       }
-        
-      })
+      appendUser(user);
+    }
+  }
 
-    })
-  $('#hideUsers').on('click', function(){
+  function appendUser(user) {
+    var usersDiv = $('#users');
+    usersDiv.append('<p>' + user.name + ' has ' + user.taskCount + ' tasks!</p>');
+  }
+
+  function hideUsers() {
     $('#users').html('');
     $('#viewUsers').show();
     $('#hideUsers').hide();
+  }
 
-  })
+    
+
+

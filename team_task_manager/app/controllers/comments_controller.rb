@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
 
   def index
     @project = Project.find(params[:project_id]).includes(:comments)
-    @comments = @projet.comments # Will not trigger more SQL
+    @comments = @project.comments # Will not trigger more SQL
     render :json @comments
   end
 
