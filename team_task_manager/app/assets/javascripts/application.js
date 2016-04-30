@@ -27,16 +27,16 @@ $(document).ready(function() {
       loadComments();
     });
     $('form').on('submit', function(event){
-      createComment(event);
+      createComment(event, this);
     });
     $('#hideComments').on('click', function(){
       hideComments();
     });
     $('.moreInfo').on('click', function(){
-      getMoreInfo();
+      getMoreInfo(this);
     }); 
     $('.hideInfo').on('click', function(){
-      hideMoreInfo();
+      hideMoreInfo(this);
     });
     $('#viewUsers').on('click', function(){
       viewUsers();
@@ -75,9 +75,9 @@ $(document).ready(function() {
     return "<p>" + commentData["user"]["name"] + " said " + commentData["content"] + "</p>";
   }
 
-  function createComment(event) {
+  function createComment(event, form) {
     event.preventDefault();
-    var commentData = $(this).serialize();
+    var commentData = $(form).serialize();
     $.ajax({
       method: 'POST',
       url: '/comments',
@@ -88,7 +88,8 @@ $(document).ready(function() {
   }
 
   function appendComment(data) {
-    debugger;
+    var commentData = data.comment;
+    $('#projectComments').append(buildCommentParagraph(commentData));
   }
 
   function hideComments() {
@@ -97,10 +98,10 @@ $(document).ready(function() {
     $(this).hide();
   }
   
-  function getMoreInfo() {
+  function getMoreInfo(link) {
     $.ajax({
       method: 'GET',
-      url: '/projects/' + this.attributes[1].value,
+      url: '/projects/' + link.attributes[1].value,
       dataType: 'JSON'
     }).done(function(projectData){
       extractInfo(projectData);
@@ -115,8 +116,8 @@ $(document).ready(function() {
     $('a.hideInfo[data-id="'+ id +'"]').show();
   }
 
-  function hideMoreInfo() {
-    var id = this.attributes[1].value;
+  function hideMoreInfo(link) {
+    var id = link.attributes[1].value;
     $(this).hide();
     $('p[data-id="'+ id +'"]').text('');
     $('a.moreInfo[data-id="'+ id +'"]').show();  

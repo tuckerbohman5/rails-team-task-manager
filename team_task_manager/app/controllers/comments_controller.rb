@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     
     if @comment.save
-      binding.pry    
+    
       render json: @comment
     else
       render :nothing
