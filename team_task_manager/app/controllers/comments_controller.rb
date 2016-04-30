@@ -1,15 +1,16 @@
 class CommentsController < ApplicationController
 
   def index
-    @project = Project.find(params[:project_id]).includes(:comments)
-    @comments = @project.comments # Will not trigger more SQL
-    render :json @comments
+    # @project = Project.find(params[:project_id]).includes(:comments)
+    # @comments = @project.comments # Will not trigger more SQL
+    # render :json @comments
   end
 
   def new
   end
 
   def create
+
     @project = Project.find_by(id: params[:comment][:project_id])
     @comment = @project.comments.build(comment_params)
     @comment.user = current_user
@@ -22,6 +23,7 @@ class CommentsController < ApplicationController
     # @project.save
     # @user.comments << @comment
     # @user.save
+    binding.pry
     
     if @comment.save
     
