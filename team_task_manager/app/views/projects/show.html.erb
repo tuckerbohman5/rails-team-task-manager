@@ -43,12 +43,40 @@
 
 <script type="text/javascript" charset="utf-8">
 
-  $(document).ready(
-   function()
-   {
-     $('#hideComments').hide();
-   }
+$(document).ready(
+  function(){
+    $('#hideComments').hide();
+  }
 );
+
+  //Lodading Comments without page reload//
+  $('#loadComments').on('click', function(){
+  
+    loadComments();
+  });
+
+
+  function loadComments() {
+    $('#projectComments').html('<h5>Comments:</h5>')
+    $.ajax({
+      method: 'GET',
+      url: this.href,
+      dataType: 'JSON'
+    }).done(function(response) {
+      var project = response["project"];
+      var comments = project["comments"];
+      for (var i = 0; i < comments.length; i++) {
+        var comment = comments[i];
+        
+        var commentHtml = '';
+        commentHtml += "<p>" + comment["user"]["name"] + " said " + comment["content"] + "</p>";
+        $('#projectComments').append(commentHtml);
+      }
+      $('#loadComments').hide();
+      $('#hideComments').show();
+    })
+  
+  }
 
 
   $('form').on('submit', function(event){
@@ -58,12 +86,11 @@
  
   var posting = $.post('/comments', values);
 
-  // posting.done(function(data){
-  //   debugger;
-  // })
-  loadComments();
-  $('#loadComments').hide();
-  $('#hideComments').show();
+  posting.done(function(data){
+    $('#projectComments').append(data);
+  })
+  
+  
 })
 
   $('#hideComments').on('click', function(){

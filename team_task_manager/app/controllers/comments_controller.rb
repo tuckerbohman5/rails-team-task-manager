@@ -1,19 +1,35 @@
 class CommentsController < ApplicationController
+
+  def index
+    @project = Project.find(params[:project_id]).includes(:comments)
+    @comments = @projet.comments # Will not trigger more SQL
+    render :json @comments
+  end
+
   def new
   end
 
   def create
+    @project = Project.find_by(id: params[:comment][:project_id])
+    @comment = @project.comments.build(comment_params)
+    @comment.user = current_user
 
-    @comment = Comment.new(comment_params)
-    @comment.save
-    @user = current_user
-    @project = Project.find_by(id: comment_params[:project_id])
+    # @comment = Comment.new(comment_params)
+    # @user = current_user
+    # @project = 
     
-    @project.comments << @comment
-    @project.save
-    @user.comments << @comment
-    @user.save
-    render json: @comment, status: 201
+    # @project.comments << @comment
+    # @project.save
+    # @user.comments << @comment
+    # @user.save
+    
+    if @comment.save
+    
+      render json: @comment, status: 201
+    else
+      render # some sort of error json
+    end
+
     #redirect_to project_path(@project)
   end
 
@@ -22,6 +38,6 @@ class CommentsController < ApplicationController
 
   private
     def comment_params
-      params.require(:comment).permit(:content, :user_id, :project_id)
+      params.require(:comment).permit(:content)
     end
 end

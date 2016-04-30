@@ -2,7 +2,9 @@ class Project < ActiveRecord::Base
   belongs_to :user
   has_many :tasks
   has_many :comments
-  has_many :users, through: :comments
+
+  has_many :commentors, through: :comments,  :class_name => "User", :foreign_key => :user_id
+  has_many :collaborators, through: :tasks,  :class_name => "User", :foreign_key => :user_id
 
   validates_presence_of :name, :description
 
@@ -18,6 +20,9 @@ class Project < ActiveRecord::Base
   end
 
   def self.completed_projects
+    # a project is considered complete when all of it's tasks are complete
+    # Merge scope
+    # tasks.merge(Task.completed)
     where(completed: true)
   end
 

@@ -1,0 +1,17 @@
+$(function(){
+  // Bind our Events
+  $("#loadComments").on("click", loadComment)
+})
+
+
+// Define functions
+function loadComment(e){
+  e.preventDefault;
+  $.get("/projects/1/comments", function(json){
+
+  })
+}
+
+function injectComments(json){
+  
+}
